@@ -1,0 +1,129 @@
+1-to get list of all indices/databses 
+
+GET /_cat/indices
+
+2-to create an index or database or table
+
+PUT /my_blog
+
+3-to check the mapping(schema) of database
+
+GET my_blog/_mapping
+
+4-Delete the index/database /table
+
+DELETE /my_blog
+
+5-Again creating a database/table/index with mappings
+
+PUT /my_blog
+{
+  
+  "mappings": {
+    
+    "properties": {
+      
+      "post_index":{"type":"text"}
+    }
+    
+  }
+}
+
+
+mappings=schema
+properties=columns
+
+6-to get mappings of the index/databases
+
+GET my_blog/_mapping
+
+document can be thought of as a row
+
+7-Inserting a document/table/row in database/index 
+
+POST my_blog/_doc
+{
+  "post_index":"Hello from Code It Up!"
+}
+
+
+8-Inserting a document/table in database/index with custom document_id 
+
+
+POST my_blog/_doc/1 for custom document_id
+{
+  "post_index":"Hello from Code It Up!"
+}
+
+
+9-Inserting a document/table in database/index with custom document_id 
+
+
+POST my_blog/_doc/2
+{
+  "post_index":"Hello from Code It Up! with custom document id"
+}
+
+
+
+10-Basic search for documents 
+
+GET my_blog/_search
+
+Searching with document_id 2
+
+GET my_blog/_doc/2
+
+
+11-Quering with the post_index as "Hello"
+
+GET my_blog/_search?q=post_index:Hello
+
+sort the result with score
+
+
+
+POST my_blog/_doc/4
+{
+  "post_index":"Hello from Code It Up! with custom document id 4th time"
+}
+
+note version is telling the latest update on the same document id
+
+
+GET my_blog/_search
+
+
+
+
+Advance Query option in tables 
+
+Method 1
+
+GET my_blog/_search?q=post_index=hello
+
+Method 2
+
+match will search for at least one word in the phrase 
+
+
+
+GET my_blog/_search 
+{
+  "query":{
+    "match":{"post_index":"Code It up ! with document_id"}
+}
+}
+
+
+
+
+match_phrase will match the exact sequemce of words
+
+
+GET my_blog/_search 
+{
+  "query":{
+    "match_phrase":{"post_index":"Code It up ! with document_id"}
+}
+}
